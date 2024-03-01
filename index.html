@@ -1,13 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello, World!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ampoule Strength Converter by Putu</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    h1 {
+        margin-top: 50px;
+    }
+    form {
+        margin: 20px auto;
+        width: 80%;
+        max-width: 500px;
+        text-align: left;
+    }
+    input[type="text"] {
+        width: calc(100% - 40px);
+        padding: 10px;
+        margin: 5px 0;
+    }
+    input[type="text"] + span {
+        padding: 10px;
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+    .output {
+        margin-top: 20px;
+    }
+</style>
 </head>
 <body>
 
-    <h1>Hello, World!</h1>
-    
+<h1>Ampoule Strength Converter by Putu</h1>
+<h3>Please input the variables as needed</h3>
+
+<form id="converterForm">
+    <label for="mgInput">Unit in Mg</label><br>
+    <input type="text" id="mgInput" name="mgInput" pattern="[0-9]*" title="Enter a number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <span>mg</span><br>
+
+    <label for="mlInput">Unit in mL</label><br>
+    <input type="text" id="mlInput" name="mlInput" pattern="[0-9]*" title="Enter a number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <span>mL</span><br>
+
+    <label for="percentageInput">Unit in %</label><br>
+    <input type="text" id="percentageInput" name="percentageInput" pattern="[0-9]*" title="Enter a number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <span>%</span><br>
+
+    <input type="submit" value="Convert">
+</form>
+
+<div class="output">
+    <p id="convertedStrength"></p>
+    <p id="moleculeVolume"></p>
+    <p id="baseStrength"></p>
+</div>
+
+<script>
+    const form = document.getElementById('converterForm');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const mgInput = parseInt(document.getElementById('mgInput').value);
+        const mlInput = parseInt(document.getElementById('mlInput').value);
+        const percentageInput = parseInt(document.getElementById('percentageInput').value);
+
+        let convertedStrength = "N/A";
+        let moleculeVolume = "N/A";
+        let baseStrength = "N/A";
+
+        if (!isNaN(percentageInput) && !isNaN(mlInput)) {
+            convertedStrength = ((percentageInput / 100) * mlInput).toFixed(2) + " Grams";
+            moleculeVolume = mgInput.toFixed(2) + "mg / " + mlInput.toFixed(2) + "mL";
+        }
+
+        if (!isNaN(mgInput)) {
+            baseStrength = (mgInput / 10).toFixed(2) + "%";
+        }
+
+        document.getElementById('convertedStrength').textContent = "Converted Strength: " + convertedStrength;
+        document.getElementById('moleculeVolume').textContent = "Molecule/Volume: " + moleculeVolume;
+        document.getElementById('baseStrength').textContent = "Base Strength: " + baseStrength;
+    });
+</script>
+
 </body>
 </html>
