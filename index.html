@@ -119,24 +119,24 @@
 
         if (!isNaN(percentageInput) && !isNaN(mlInput)) {
             strengthInGrams = ((percentageInput / 100) * mlInput).toFixed(2);
-            strengthInMg = (strengthInGrams * 1000).toFixed(2);
+            strengthInMg = (strengthInGrams * 1000).toFixed(1);
             strengthInGramsBase = (strengthInGrams / mlInput).toFixed(2);
             strengthInMgBase = (strengthInMg / mlInput).toFixed(2);
             moleculeVolume = mgInput.toFixed(2) + "mg / " + mlInput.toFixed(2) + "mL";
         } else if (!isNaN(mgInput)) {
-            strengthInMg = mgInput.toFixed(2);
+            strengthInMg = mgInput.toFixed(1);
             strengthInGrams = (mgInput / 1000).toFixed(2);
             moleculeVolume = mgInput.toFixed(2) + "mg / " + mlInput.toFixed(2) + "mL";
         }
 
         if (!isNaN(percentageInput)) {
-            baseStrength = percentageInput.toFixed(1) + "%";
+            baseStrength = ((mgInput / mlInput) / 10).toFixed(1) + "%";
         }
 
-        document.getElementById('strengthInGrams').textContent = strengthInGrams;
-        document.getElementById('strengthInMg').textContent = strengthInMg;
-        document.getElementById('strengthInGramsBase').textContent = strengthInGramsBase;
-        document.getElementById('strengthInMgBase').textContent = strengthInMgBase;
+        document.getElementById('strengthInGrams').textContent = strengthInGrams + " g";
+        document.getElementById('strengthInMg').textContent = strengthInMg + " mg";
+        document.getElementById('strengthInGramsBase').textContent = strengthInGramsBase + " g";
+        document.getElementById('strengthInMgBase').textContent = strengthInMgBase + " mg";
         document.getElementById('moleculeVolume').textContent = moleculeVolume;
         document.getElementById('baseStrength').textContent = baseStrength;
 
