@@ -23,11 +23,6 @@
         padding: 10px;
         margin: 5px 0;
     }
-    input[type="text"] + span {
-        padding: 10px;
-        background-color: #f4f4f4;
-        border: 1px solid #ddd;
-    }
     input[type="submit"] {
         background-color: #4CAF50;
         color: white;
@@ -41,6 +36,17 @@
     .output {
         margin-top: 20px;
     }
+    table {
+        margin: 0 auto;
+        border-collapse: collapse;
+        width: 80%;
+        max-width: 500px;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
 </style>
 </head>
 <body>
@@ -50,24 +56,48 @@
 
 <form id="converterForm">
     <label for="mgInput">Unit in Mg</label><br>
-    <input type="text" id="mgInput" name="mgInput" pattern="[0-9]*" title="Enter a number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-    <span>mg</span><br>
+    <input type="text" id="mgInput" name="mgInput" pattern="[0-9]*" title="Enter a number" oninput="this.value=this.value.replace(/[^0-9]/g,'')"><br>
 
     <label for="mlInput">Unit in mL</label><br>
-    <input type="text" id="mlInput" name="mlInput" pattern="[0-9]*" title="Enter a number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-    <span>mL</span><br>
+    <input type="text" id="mlInput" name="mlInput" pattern="[0-9]*" title="Enter a number" oninput="this.value=this.value.replace(/[^0-9]/g,'')"><br>
 
     <label for="percentageInput">Unit in %</label><br>
-    <input type="text" id="percentageInput" name="percentageInput" pattern="[0-9]*" title="Enter a number" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-    <span>%</span><br>
+    <input type="text" id="percentageInput" name="percentageInput" pattern="[0-9]*" title="Enter a number" oninput="this.value=this.value.replace(/[^0-9]/g,'')"><br>
 
     <input type="submit" value="Convert">
 </form>
 
 <div class="output">
-    <p id="convertedStrength"></p>
-    <p id="moleculeVolume"></p>
-    <p id="baseStrength"></p>
+    <table>
+        <tr>
+            <th>Measure</th>
+            <th>Value</th>
+        </tr>
+        <tr id="strengthInGramsRow" style="display: none;">
+            <td>Strength in Grams</td>
+            <td id="strengthInGrams"></td>
+        </tr>
+        <tr id="strengthInMgRow" style="display: none;">
+            <td>Strength in Mg</td>
+            <td id="strengthInMg"></td>
+        </tr>
+        <tr id="strengthInGramsBaseRow" style="display: none;">
+            <td>Strength in Grams (Base)</td>
+            <td id="strengthInGramsBase"></td>
+        </tr>
+        <tr id="strengthInMgBaseRow" style="display: none;">
+            <td>Strength in Mg (Base)</td>
+            <td id="strengthInMgBase"></td>
+        </tr>
+        <tr id="moleculeVolumeRow" style="display: none;">
+            <td>Molecule/Volume</td>
+            <td id="moleculeVolume"></td>
+        </tr>
+        <tr id="baseStrengthRow" style="display: none;">
+            <td>Strength in %</td>
+            <td id="baseStrength"></td>
+        </tr>
+    </table>
 </div>
 
 <script>
@@ -80,22 +110,42 @@
         const mlInput = parseInt(document.getElementById('mlInput').value);
         const percentageInput = parseInt(document.getElementById('percentageInput').value);
 
-        let convertedStrength = "N/A";
-        let moleculeVolume = "N/A";
-        let baseStrength = "N/A";
+        let strengthInGrams = "";
+        let strengthInMg = "";
+        let strengthInGramsBase = "";
+        let strengthInMgBase = "";
+        let moleculeVolume = "";
+        let baseStrength = "";
 
         if (!isNaN(percentageInput) && !isNaN(mlInput)) {
-            convertedStrength = ((percentageInput / 100) * mlInput).toFixed(2) + " Grams";
+            strengthInGrams = ((percentageInput / 100) * mlInput).toFixed(2);
+            strengthInMg = (strengthInGrams * 1000).toFixed(2);
+            strengthInGramsBase = (strengthInGrams / mlInput).toFixed(2);
+            strengthInMgBase = (strengthInMg / mlInput).toFixed(2);
+            moleculeVolume = mgInput.toFixed(2) + "mg / " + mlInput.toFixed(2) + "mL";
+        } else if (!isNaN(mgInput)) {
+            strengthInMg = mgInput.toFixed(2);
+            strengthInGrams = (mgInput / 1000).toFixed(2);
             moleculeVolume = mgInput.toFixed(2) + "mg / " + mlInput.toFixed(2) + "mL";
         }
 
-        if (!isNaN(mgInput)) {
-            baseStrength = (mgInput / 10).toFixed(2) + "%";
+        if (!isNaN(percentageInput)) {
+            baseStrength = percentageInput.toFixed(1) + "%";
         }
 
-        document.getElementById('convertedStrength').textContent = "Converted Strength: " + convertedStrength;
-        document.getElementById('moleculeVolume').textContent = "Molecule/Volume: " + moleculeVolume;
-        document.getElementById('baseStrength').textContent = "Base Strength: " + baseStrength;
+        document.getElementById('strengthInGrams').textContent = strengthInGrams;
+        document.getElementById('strengthInMg').textContent = strengthInMg;
+        document.getElementById('strengthInGramsBase').textContent = strengthInGramsBase;
+        document.getElementById('strengthInMgBase').textContent = strengthInMgBase;
+        document.getElementById('moleculeVolume').textContent = moleculeVolume;
+        document.getElementById('baseStrength').textContent = baseStrength;
+
+        document.getElementById('strengthInGramsRow').style.display = "table-row";
+        document.getElementById('strengthInMgRow').style.display = "table-row";
+        document.getElementById('strengthInGramsBaseRow').style.display = "table-row";
+        document.getElementById('strengthInMgBaseRow').style.display = "table-row";
+        document.getElementById('moleculeVolumeRow').style.display = "table-row";
+        document.getElementById('baseStrengthRow').style.display = "table-row";
     });
 </script>
 
