@@ -133,6 +133,11 @@
             baseStrength = ((mgInput / mlInput) / 10).toFixed(1) + "%";
         }
 
+        if (isNaN(percentageInput)) {
+            strengthInGramsBase = ((mgInput / 1000) / mlInput).toFixed(2);
+            strengthInMgBase = (mgInput / mlInput).toFixed(1);
+        }
+
         document.getElementById('strengthInGrams').textContent = strengthInGrams + " g";
         document.getElementById('strengthInMg').textContent = strengthInMg + " mg";
         document.getElementById('strengthInGramsBase').textContent = strengthInGramsBase + " g";
