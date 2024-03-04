@@ -129,10 +129,8 @@
             moleculeVolume = mgInput.toFixed(1) + "mg / " + mlInput.toFixed(1) + "mL";
         }
 
-        if (!isNaN(percentageInput)) {
-            baseStrength = ((mgInput / mlInput) / 10).toFixed(1) + "%";
-        } else {
-            baseStrength = (isNaN(percentageInput) ? percentageInput : (mgInput / mlInput / 10).toFixed(1)) + "%";
+        if (!isNaN(percentageInput) || isNaN(percentageInput)) {
+            baseStrength = ((isNaN(percentageInput) ? percentageInput : (mgInput / mlInput / 10)) * 100).toFixed(1) + "%";
         }
 
         if (isNaN(percentageInput)) {
