@@ -122,15 +122,17 @@
             strengthInMg = (strengthInGrams * 1000).toFixed(1);
             strengthInGramsBase = (strengthInGrams / mlInput).toFixed(2);
             strengthInMgBase = (strengthInMg / mlInput).toFixed(2);
-            moleculeVolume = mgInput.toFixed(2) + "mg / " + mlInput.toFixed(2) + "mL";
+            moleculeVolume = (isNaN(mgInput) ? strengthInMg.toFixed(1) : mgInput.toFixed(1)) + "mg / " + mlInput.toFixed(1) + "mL";
         } else if (!isNaN(mgInput)) {
             strengthInMg = mgInput.toFixed(1);
             strengthInGrams = (mgInput / 1000).toFixed(2);
-            moleculeVolume = mgInput.toFixed(2) + "mg / " + mlInput.toFixed(2) + "mL";
+            moleculeVolume = mgInput.toFixed(1) + "mg / " + mlInput.toFixed(1) + "mL";
         }
 
         if (!isNaN(percentageInput)) {
             baseStrength = ((mgInput / mlInput) / 10).toFixed(1) + "%";
+        } else {
+            baseStrength = (isNaN(percentageInput) ? percentageInput : (mgInput / mlInput / 10).toFixed(1)) + "%";
         }
 
         if (isNaN(percentageInput)) {
