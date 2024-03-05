@@ -120,16 +120,13 @@
 
         if (!isNaN(mgInput) && isNaN(mlInput) && !isNaN(percentageInput)) {
             document.getElementById('mLWarning').textContent = "The unit in mL is mandatory! And please delete either Unit in Mg or Unit in %";
-            return;
         } else if (isNaN(mgInput) && isNaN(mlInput) && isNaN(percentageInput)) {
             document.getElementById('mLWarning').textContent = "Please fill two out of three inputs. Unit in mL is Mandatory!";
-            return;
         } else if (!isNaN(mgInput) && !isNaN(mlInput) && !isNaN(percentageInput)) {
             document.getElementById('mLWarning').textContent = "Please delete either Unit in Mg or Unit in %";
-            return;
         } else if (!isNaN(mgInput) && !isNaN(mlInput) && isNaN(percentageInput)) {
-            strengthInGrams = ((mgInput / 1000) * mlInput).toFixed(2);
-            strengthInMg = (strengthInGrams * 1000).toFixed(1);
+            strengthInGrams = (mgInput / 1000).toFixed(2);
+            strengthInMg = mgInput.toFixed(1);
             strengthInGramsBase = ((mgInput / 1000) / mlInput).toFixed(2);
             strengthInMgBase = (mgInput / mlInput).toFixed(2);
             moleculeVolume = mgInput.toFixed(1) + "mg / " + mlInput.toFixed(1) + "mL";
@@ -140,7 +137,7 @@
             strengthInGramsBase = (strengthInGrams / mlInput).toFixed(2);
             strengthInMgBase = (strengthInMg / mlInput).toFixed(2);
             moleculeVolume = strengthInMg.toFixed(1) + "mg / " + mlInput.toFixed(1) + "mL";
-            baseStrength = percentageInput.toFixed(1) + "%";   
+            baseStrength = percentageInput.toFixed(1) + "%";
         }
 
         document.getElementById('strengthInGrams').textContent = strengthInGrams + " g";
