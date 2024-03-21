@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Generator by Putu</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://youronlydimwit.github.io/styles/stylesGenerator.css">
 </head>
 <body>
     <div class="container">
@@ -18,7 +18,7 @@
             <input type="number" id="numRows" min="1" required><br><br>
 
             <label for="dataType">Data Type:</label>
-            <select id="dataType" required onchange="showInputFields()">
+            <select id="dataType" required>
                 <option value="randomNumbers">Random Numbers</option>
                 <option value="numbersInRange">Numbers in Range</option>
                 <option value="singleNumber">Single Number</option>
@@ -26,21 +26,21 @@
                 <option value="words">Words</option>
             </select><br><br>
 
-            <div id="rangeInput" style="display: none;">
+            <div id="rangeInput" class="hidden">
                 <label for="minValue">Minimum Value:</label>
-                <input type="number" id="minValue" required><br><br>
+                <input type="number" id="minValue" required>
                 <label for="maxValue">Maximum Value:</label>
-                <input type="number" id="maxValue" required><br><br>
+                <input type="number" id="maxValue" required>
             </div>
 
-            <div id="singleInput" style="display: none;">
+            <div id="singleInput" class="hidden">
                 <label for="singleValue">Value:</label>
-                <input type="text" id="singleValue" required><br><br>
+                <input type="text" id="singleValue" required>
             </div>
 
-            <div id="wordsInput" style="display: none;">
-                <label for="wordsValue">Words (separated by commas):</label>
-                <input type="text" id="wordsValue" required><br><br>
+            <div id="wordsInput" class="hidden">
+                <label for="wordsValue">Words (comma-separated):</label>
+                <input type="text" id="wordsValue" required>
             </div>
 
             <button type="button" onclick="generateData()">Generate Data</button>
@@ -48,6 +48,7 @@
 
         <div id="generatedData"></div>
     </div>
+
     <script src="https://youronlydimwit.github.io/scripts/dataGenerator.js"></script>
 </body>
 </html>
