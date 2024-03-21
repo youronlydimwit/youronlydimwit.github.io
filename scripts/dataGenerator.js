@@ -111,3 +111,21 @@ document.getElementById("dataType").addEventListener("change", function() {
 
     switch(dataType) {
         case "numbersInRange":
+            rangeInput.classList.remove("hidden");
+            break;
+        case "singleNumber":
+            singleInput.classList.remove("hidden");
+            break;
+        case "singleWord":
+            singleInput.classList.remove("hidden");
+            break;
+        case "words":
+            wordsInput.classList.remove("hidden");
+            break;
+        default:
+            break;
+    }
+});
+
+// Initially hide additional input fields
+document.getElementById("dataType").dispatchEvent(new Event("change"));
