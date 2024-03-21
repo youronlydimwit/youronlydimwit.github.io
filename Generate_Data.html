@@ -11,8 +11,13 @@
         <h1>Data Generator by Putu</h1>
         <h2>Quickly simulate your survey results</h2>
         <form id="dataForm">
-            <label for="columnName">Column Name:</label>
-            <input type="text" id="columnName" required><br><br>
+            <div id="columnInputs">
+                <div class="columnInput">
+                    <label for="columnName1">Column Name 1:</label>
+                    <input type="text" class="column" required>
+                </div>
+            </div>
+            <button type="button" onclick="addColumn()">Add Column</button><br><br>
 
             <label for="numRows">Number of Rows:</label>
             <input type="number" id="numRows" min="1" required><br><br>
