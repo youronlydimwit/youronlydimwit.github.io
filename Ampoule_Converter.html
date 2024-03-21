@@ -67,42 +67,19 @@
     <input type="submit" value="Convert">
 </form>
 
-<div class="output">
+<div class="output" id="output" style="display: none;">
     <div id="mlWarning"></div>
-    <table>
+    <table id="outputTable">
         <tr>
             <th>Measure</th>
             <th>Value</th>
-        </tr>
-        <tr id="strengthInGramsRow" style="display: none;">
-            <td>Strength in Grams</td>
-            <td id="strengthInGrams"></td>
-        </tr>
-        <tr id="strengthInMgRow" style="display: none;">
-            <td>Strength in Mg</td>
-            <td id="strengthInMg"></td>
-        </tr>
-        <tr id="strengthInGramsBaseRow" style="display: none;">
-            <td>Strength in Grams (Base)</td>
-            <td id="strengthInGramsBase"></td>
-        </tr>
-        <tr id="strengthInMgBaseRow" style="display: none;">
-            <td>Strength in Mg (Base)</td>
-            <td id="strengthInMgBase"></td>
-        </tr>
-        <tr id="moleculeVolumeRow" style="display: none;">
-            <td>Molecule/Volume</td>
-            <td id="moleculeVolume"></td>
-        </tr>
-        <tr id="baseStrengthRow" style="display: none;">
-            <td>Strength in %</td>
-            <td id="baseStrength"></td>
         </tr>
     </table>
 </div>
 
 <script>
     const form = document.getElementById('converterForm');
+    const output = document.getElementById('output');
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -111,48 +88,43 @@
         const mlInput = parseInt(document.getElementById('mlInput').value);
         const percentageInput = parseInt(document.getElementById('percentageInput').value);
 
-        let strengthInGrams = "";
-        let strengthInMg = "";
-        let strengthInGramsBase = "";
-        let strengthInMgBase = "";
-        let moleculeVolume = "";
-        let baseStrength = "";
+        let outputTable = document.getElementById('outputTable');
+        outputTable.innerHTML = ""; // Clear previous output
 
-        if (!isNaN(mgInput) && isNaN(mlInput) && !isNaN(percentageInput)) {
-            document.getElementById('mLWarning').textContent = "The unit in mL is mandatory! And please delete either Unit in Mg or Unit in %";
-        } else if (isNaN(mgInput) && isNaN(mlInput) && isNaN(percentageInput)) {
-            document.getElementById('mLWarning').textContent = "Please fill two out of three inputs. Unit in mL is Mandatory!";
-        } else if (!isNaN(mgInput) && !isNaN(mlInput) && !isNaN(percentageInput)) {
-            document.getElementById('mLWarning').textContent = "Please delete either Unit in Mg or Unit in %";
-        } else if (!isNaN(mgInput) && !isNaN(mlInput) && isNaN(percentageInput)) {
-            strengthInGrams = (mgInput / 1000).toFixed(2);
-            strengthInMg = mgInput.toFixed(1);
-            strengthInGramsBase = ((mgInput / 1000) / mlInput).toFixed(2);
-            strengthInMgBase = (mgInput / mlInput).toFixed(2);
-            moleculeVolume = mgInput.toFixed(1) + "mg / " + mlInput.toFixed(1) + "mL";
-            baseStrength = (strengthInMgBase / 10).toFixed(1) + "%";
-        } else if (isNaN(mgInput) && !isNaN(mlInput) && !isNaN(percentageInput)) {
-            strengthInGrams = ((percentageInput / 100) * mlInput).toFixed(2);
-            strengthInMg = (strengthInGrams * 1000).toFixed(1);
-            strengthInGramsBase = (strengthInGrams / mlInput).toFixed(2);
-            strengthInMgBase = (strengthInMg / mlInput).toFixed(2);
-            moleculeVolume = strengthInMg.toFixed(1) + "mg / " + mlInput.toFixed(1) + "mL";
-            baseStrength = percentageInput.toFixed(1) + "%";
+        if (isNaN(mgInput) || isNaN(mlInput) || isNaN(percentageInput)) {
+            document.getElementById('mlWarning').textContent = "Please fill all three inputs.";
+            output.style.display = "none"; // Hide output if inputs are not filled correctly
+            return; // Stop execution if inputs are not filled correctly
         }
 
-        document.getElementById('strengthInGrams').textContent = strengthInGrams + " g";
-        document.getElementById('strengthInMg').textContent = strengthInMg + " mg";
-        document.getElementById('strengthInGramsBase').textContent = strengthInGramsBase + " g";
-        document.getElementById('strengthInMgBase').textContent = strengthInMgBase + " mg";
-        document.getElementById('moleculeVolume').textContent = moleculeVolume;
-        document.getElementById('baseStrength').textContent = baseStrength;
+        let strengthInGrams = (mgInput / 1000).toFixed(2);
+        let strengthInMg = mgInput.toFixed(1);
+        let strengthInGramsBase = ((mgInput / 1000) / mlInput).toFixed(2);
+        let strengthInMgBase = (mgInput / mlInput).toFixed(2);
+        let moleculeVolume = mgInput.toFixed(1) + "mg / " + mlInput.toFixed(1) + "mL";
+        let baseStrength = (strengthInMgBase / 10).toFixed(1) + "%";
 
-        document.getElementById('strengthInGramsRow').style.display = "table-row";
-        document.getElementById('strengthInMgRow').style.display = "table-row";
-        document.getElementById('strengthInGramsBaseRow').style.display = "table-row";
-        document.getElementById('strengthInMgBaseRow').style.display = "table-row";
-        document.getElementById('moleculeVolumeRow').style.display = "table-row";
-        document.getElementById('baseStrengthRow').style.display = "table-row";
+        let rows = [
+            {measure: "Strength in Grams", value: strengthInGrams + " g"},
+            {measure: "Strength in Mg", value: strengthInMg + " mg"},
+            {measure: "Strength in Grams (Base)", value: strengthInGramsBase + " g"},
+            {measure: "Strength in Mg (Base)", value: strengthInMgBase + " mg"},
+            {measure: "Molecule/Volume", value: moleculeVolume},
+            {measure: "Strength in %", value: baseStrength}
+        ];
+
+        rows.forEach(row => {
+            let tr = document.createElement('tr');
+            let th = document.createElement('th');
+            th.textContent = row.measure;
+            let td = document.createElement('td');
+            td.textContent = row.value;
+            tr.appendChild(th);
+            tr.appendChild(td);
+            outputTable.appendChild(tr);
+        });
+
+        output.style.display = "block"; // Show output
     });
 </script>
 
