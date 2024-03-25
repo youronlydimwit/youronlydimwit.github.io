@@ -7,25 +7,24 @@
     <link rel="stylesheet" href="https://youronlydimwit.github.io/styles/stylesGenerator.css">
 </head>
 <body>
-    <div class="grid-container">
-        <div class="upper-left">
+    <div class="container">
+        <div class="upperLeft">
             <h1>Data Generator by Putu</h1>
             <h2>Quickly simulate your survey results</h2>
-            <form id="columnForm">
-                <div id="columnInputs">
-                    <div class="columnInput">
-                        <label for="columnName1">Column Name 1:</label>
-                        <input type="text" class="column" required>
-                        <button type="button" class="removeColumn" onclick="removeColumn(this)">Remove</button>
-                    </div>
+            <div id="columnInputs">
+                <div class="columnInput">
+                    <label for="columnName1">Column Name 1:</label>
+                    <input type="text" class="column" required>
+                    <button type="button" class="removeColumn" onclick="removeColumn(this)">Remove</button>
                 </div>
-                <button type="button" id="addColumnBtn" onclick="addColumn()">Add Column</button>
-            </form>
+            </div>
+            <button type="button" id="addColumnBtn" onclick="addColumn()">Add Column</button>
         </div>
-        <div class="lower-left">
+        
+        <div class="lowerLeft">
             <label for="numRows">Number of Rows:</label>
             <input type="number" id="numRows" min="1" required><br><br>
-
+    
             <label for="dataType">Data Type:</label>
             <select id="dataType" required>
                 <option value="randomNumbers">Random Numbers</option>
@@ -34,31 +33,31 @@
                 <option value="singleWord">Single Word</option>
                 <option value="words">Words</option>
             </select><br><br>
-
+    
             <div id="rangeInput" class="hidden">
                 <label for="minValue">Minimum Value:</label>
-                <input type="number" id="minValue" required>
+                <input type="number" id="minValue">
                 <label for="maxValue">Maximum Value:</label>
-                <input type="number" id="maxValue" required>
+                <input type="number" id="maxValue">
             </div>
-
+    
             <div id="singleInput" class="hidden">
                 <label for="singleValue">Value:</label>
-                <input type="text" id="singleValue" required>
+                <input type="text" id="singleValue">
             </div>
-
+    
             <div id="wordsInput" class="hidden">
                 <label for="wordsValue">Words (comma-separated):</label>
-                <input type="text" id="wordsValue" required>
+                <input type="text" id="wordsValue">
             </div>
-
+    
             <button type="button" onclick="generateData()">Generate Data</button>
         </div>
-        <div class="upper-right">
+
+        <div class="output">
             <p>Output table:</p>
             <div id="generatedData"></div>
         </div>
-        <div class="lower-right"></div>
     </div>
 
     <script src="https://youronlydimwit.github.io/scripts/dataGenerator.js"></script>
